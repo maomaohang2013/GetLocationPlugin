@@ -19,6 +19,7 @@
 				<param name="android-package" value="com.example.getlocation.GetLocationPlugin" />
 			</feature>
         </config-file>
+		
 		<source-file src="src/android/com/example/getlocation/GetLocationPlugin.java" target-dir="src/com/example/getlocation" />
 		<source-file src="src/android/com/amap/map3d/demo/geocoder/GeocoderActivity.java" target-dir="src/com/amap/map3d/demo/geocoder" />
 		<source-file src="src/android/com/amap/map3d/demo/location/LocationSourceActivity.java" target-dir="src/com/amap/map3d/demo/location" />
