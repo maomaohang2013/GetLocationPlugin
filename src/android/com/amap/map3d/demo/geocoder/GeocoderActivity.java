@@ -17,7 +17,7 @@ import com.amap.api.services.geocoder.GeocodeSearch.OnGeocodeSearchListener;
 import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.amap.map3d.demo.util.ToastUtil;
-import com.example.getlocation.R;
+import com.example.testhello.R;
 
 
 public class GeocoderActivity extends Activity implements
@@ -58,7 +58,7 @@ public class GeocoderActivity extends Activity implements
 		progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		progDialog.setIndeterminate(false);
 		progDialog.setCancelable(true);
-		progDialog.setMessage("正在获取地址");
+		progDialog.setMessage("正在獲取地址...");
 		progDialog.show();
 	}
 
@@ -68,28 +68,18 @@ public class GeocoderActivity extends Activity implements
 		}
 	}
 
-	
-	/**
-	 * 响应逆地理编码
-	 */
 	public void getAddress(final LatLonPoint latLonPoint) {
 		showDialog();
 		RegeocodeQuery query = new RegeocodeQuery(latLonPoint, 200,
-				GeocodeSearch.AMAP);// 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
-		geocoderSearch.getFromLocationAsyn(query);// 设置同步逆地理编码请求
+				GeocodeSearch.AMAP);
+		geocoderSearch.getFromLocationAsyn(query);
 	}
 
-	/**
-	 * 地理编码查询回调
-	 */
 	@Override
 	public void onGeocodeSearched(GeocodeResult result, int rCode) {
 		
 	}
 
-	/**
-	 * 逆地理编码回调
-	 */
 	@Override
 	public void onRegeocodeSearched(RegeocodeResult result, int rCode) {
 		dismissDialog();
@@ -107,15 +97,15 @@ public class GeocoderActivity extends Activity implements
 	            finish();
 				//ToastUtil.show(GeocoderActivity.this, addressName);
 			} else {
-				ToastUtil.show(GeocoderActivity.this, R.string.no_result);
+				ToastUtil.show(GeocoderActivity.this, "对不起，没有搜索到相关数据！");
 			}
 		} else if (rCode == 27) {
-			ToastUtil.show(GeocoderActivity.this, R.string.error_network);
+			ToastUtil.show(GeocoderActivity.this, "搜索失败,请检查网络连接！");
 		} else if (rCode == 32) {
-			ToastUtil.show(GeocoderActivity.this, R.string.error_key);
+			ToastUtil.show(GeocoderActivity.this, "key验证无效！");
 		} else {
 			ToastUtil.show(GeocoderActivity.this,
-					getString(R.string.error_other) + rCode);
+					"未知错误，请稍后重试!错误码为" + rCode);
 		}
 	}
 

@@ -8,16 +8,12 @@ import org.json.JSONException;
 
 import com.amap.map3d.demo.geocoder.GeocoderActivity;
 import com.amap.map3d.demo.location.LocationSourceActivity;
-
-import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
+
 
 
 public class GetLocationPlugin extends CordovaPlugin {
@@ -60,13 +56,10 @@ public class GetLocationPlugin extends CordovaPlugin {
 		  
         @Override  
         public void onReceive(Context context, Intent intent) {  
-            // TODO Auto-generated method stub  
 
-            
             String longitude = intent.getExtras().getString("longitude");
     		String latitude = intent.getExtras().getString("latitude");
-            
-            //callbackContext.success("緯度： "+latitude+"<br>經度： "+longitude);
+
 			mProgressDialog.dismiss();
             cordova.getActivity().unregisterReceiver(broadcastReceiver);  
             
@@ -91,7 +84,7 @@ public class GetLocationPlugin extends CordovaPlugin {
             String address = intent.getExtras().getString("address");
     		
             
-            callbackContext.success("地址：  "+address);			
+            callbackContext.success("�a�}�G  "+address);			
             cordova.getActivity().unregisterReceiver(broadcastReceiver1);  
 
         }  
@@ -100,7 +93,7 @@ public class GetLocationPlugin extends CordovaPlugin {
     
     private void createProgressDialog(){
         mProgressDialog=new ProgressDialog(cordova.getActivity());
-        mProgressDialog.setMessage("請稍等..");
+        mProgressDialog.setMessage("�еy��...");
         mProgressDialog.show();
     }
     

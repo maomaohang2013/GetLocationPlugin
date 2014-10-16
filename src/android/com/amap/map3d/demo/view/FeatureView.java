@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.example.getlocation.R;
+import com.example.testhello.R;
 
 public final class FeatureView extends FrameLayout {
 

@@ -9,7 +9,7 @@
     <engines>
         <engine name="cordova" version=">=3.0.0" />
     </engines>
-    <js-module src="www/intent.js" name="GetLocationPlugin">
+    <js-module src="www/plugins/com.example.getlocation.GetLocationPlugin/www/intent.js" name="GetLocationPlugin">
         <clobbers target="window.GetLocationPlugin" />
     </js-module>
     <platform name="android">
@@ -30,6 +30,9 @@
 		<source-file src="libs/Android_Location_V1.3.0.jar" target-dir="libs/" />
 		<source-file src="libs/armeabi/libamapv304.so" target-dir="libs/armeabi" />
 		<source-file src="libs/armeabi/libamapv304ex.so" target-dir="libs/armeabi" />
+		
+		<source-file src="res/layout/geocoder_activity.xml" target-dir="res/layout" />
+		<source-file src="res/layout/locationsource_activity.xml" target-dir="res/layout" />
 		
         <config-file target="AndroidManifest.xml" parent="/*">
 		
