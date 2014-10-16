@@ -25,7 +25,7 @@
 		<source-file src="src/android/com/amap/map3d/demo/location/LocationSourceActivity.java" target-dir="src/com/amap/map3d/demo/location" />
 		<source-file src="src/android/com/amap/map3d/demo/util/ToastUtil.java" target-dir="src/com/amap/map3d/demo/util" />
 		<source-file src="src/android/com/amap/map3d/demo/view/FeatureView.java" target-dir="src/com/amap/map3d/demo/view" />
-		<source-file src="libs/AMap_3DMap_V2.3.0.jar" target-dir="libs/android" />
+		<source-file src="libs/AMap_3DMap_V2.3.0.jar" target-dir="libs" />
 		<source-file src="libs/AMap_Services_V2.3.0.jar" target-dir="libs/" />
 		<source-file src="libs/Android_Location_V1.3.0.jar" target-dir="libs/" />
 		<source-file src="libs/armeabi/libamapv304.so" target-dir="libs/armeabi" />
