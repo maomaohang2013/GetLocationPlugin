@@ -47,7 +47,7 @@
 			
 			
         </config-file>
-		<config-file target="AndroidManifest.xml" parent="/application/*">
+		<config-file target="AndroidManifest.xml" parent="/application">
 			<meta-data android:name="com.amap.api.v2.apikey" android:value="210bde4cf97f186b529cbbba81d804d0" />
 			<activity
             android:name="com.amap.map3d.demo.location.LocationSourceActivity"
