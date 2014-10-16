@@ -9,8 +9,8 @@
     <engines>
         <engine name="cordova" version=">=3.0.0" />
     </engines>
-    <js-module src="www/plugins/com.example.getlocation.GetLocationPlugin/www/intent.js" name="GetLocationPlugin">
-        <clobbers target="window.GetLocationPlugin" />
+    <js-module src="www/intent.js" name="org.apache.cordova.intent">
+        <merges target="navigator.intent" />		
     </js-module>
     <platform name="android">
         
