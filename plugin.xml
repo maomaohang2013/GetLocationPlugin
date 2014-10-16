@@ -45,6 +45,10 @@
 			<uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
 			<uses-permission android:name="android.permission.WRITE_SETTINGS" />
 			
+			
+        </config-file>
+		
+		<config-file target="AndroidManifest.xml" parent="/manifest/application">
 			<meta-data android:name="com.amap.api.v2.apikey" android:value="210bde4cf97f186b529cbbba81d804d0" />
 			<activity
             android:name="com.amap.map3d.demo.location.LocationSourceActivity"
@@ -57,8 +61,6 @@
             android:label="geocoder_demo"
             android:theme="@android:style/Theme.NoDisplay"
             android:screenOrientation="portrait" />
-			
-        </config-file>
-
+		</config-file>
     </platform>
 </plugin>
