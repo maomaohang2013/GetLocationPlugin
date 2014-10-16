@@ -1,4 +1,4 @@
-cordova.define("org.apache.cordova.intent", function(require, exports, module) { 
+cordova.define("com.example.getlocation.GetLocationPlugin", function(require, exports, module) { cordova.define("org.apache.cordova.intent", function(require, exports, module) { 
 
 var exec = require('cordova/exec');
 
@@ -21,5 +21,7 @@ module.exports = {
         }, null, "GetLocationPlugin", "intent", [mills]);
     },
 };
+
+});
 
 });

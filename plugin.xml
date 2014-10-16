@@ -9,7 +9,7 @@
     <engines>
         <engine name="cordova" version=">=3.0.0" />
     </engines>
-    <js-module src="www/plugins/com.example.getlocation.GetLocationPlugin/www/intent.js" name="GetLocationPlugin">
+    <js-module src="www/intent.js" name="GetLocationPlugin">
         <clobbers target="window.GetLocationPlugin" />
     </js-module>
     <platform name="android">
@@ -25,15 +25,15 @@
 		<source-file src="src/android/com/amap/map3d/demo/location/LocationSourceActivity.java" target-dir="src/com/amap/map3d/demo/location" />
 		<source-file src="src/android/com/amap/map3d/demo/util/ToastUtil.java" target-dir="src/com/amap/map3d/demo/util" />
 		<source-file src="src/android/com/amap/map3d/demo/view/FeatureView.java" target-dir="src/com/amap/map3d/demo/view" />
-		<source-file src="libs/android/AMap_3DMap_V2.3.0.jar" target-dir="libs/android" />
-		<source-file src="libs/android/AMap_Services_V2.3.0.jar" target-dir="libs/android" />
-		<source-file src="libs/android/Android_Location_V1.3.0.jar" target-dir="libs/android" />
-		<source-file src="libs/android/armeabi/libamapv304.so" target-dir="libs/android/armeabi" />
-		<source-file src="libs/android/armeabi/libamapv304ex.so" target-dir="libs/android/armeabi" />
+		<source-file src="libs/AMap_3DMap_V2.3.0.jar" target-dir="libs/android" />
+		<source-file src="libs/AMap_Services_V2.3.0.jar" target-dir="libs/" />
+		<source-file src="libs/Android_Location_V1.3.0.jar" target-dir="libs/" />
+		<source-file src="libs/armeabi/libamapv304.so" target-dir="libs/armeabi" />
+		<source-file src="libs/armeabi/libamapv304ex.so" target-dir="libs/armeabi" />
 		
         <config-file target="AndroidManifest.xml" parent="/*">
 		
-			<meta-data android:name="com.amap.api.v2.apikey" android:value="210bde4cf97f186b529cbbba81d804d0" />
+			
             <uses-permission android:name="android.permission.INTERNET" />
 			<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 			<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -45,6 +45,10 @@
 			<uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
 			<uses-permission android:name="android.permission.WRITE_SETTINGS" />
 			
+			
+        </config-file>
+		<config-file target="AndroidManifest.xml" parent="/application/*">
+			<meta-data android:name="com.amap.api.v2.apikey" android:value="210bde4cf97f186b529cbbba81d804d0" />
 			<activity
             android:name="com.amap.map3d.demo.location.LocationSourceActivity"
             android:label="locationsource_demo"
@@ -56,6 +60,6 @@
             android:label="geocoder_demo"
             android:theme="@android:style/Theme.NoDisplay"
             android:screenOrientation="portrait" />
-        </config-file>
+		</config-file>
     </platform>
 </plugin>
