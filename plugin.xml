@@ -20,7 +20,7 @@
 			</feature>
         </config-file>
 		<source-file src="src/android/com/example/getlocation/GetLocationPlugin.java" target-dir="src/com/example/getlocation" />
-		<source-file src="src/android/com/amap/map3d/demo/geocode/GeocoderActivity.java" target-dir="src/com/amap/map3d/demo/geocode" />
+		<source-file src="src/android/com/amap/map3d/demo/geocoder/GeocoderActivity.java" target-dir="src/com/amap/map3d/demo/geocoder" />
 		<source-file src="src/android/com/amap/map3d/demo/location/LocationSourceActivity.java" target-dir="src/com/amap/map3d/demo/location" />
 		<source-file src="src/android/com/amap/map3d/demo/util/ToastUtil.java" target-dir="src/com/amap/map3d/demo/util" />
 		<source-file src="src/android/com/amap/map3d/demo/view/FeatureView.java" target-dir="src/com/amap/map3d/demo/view" />
