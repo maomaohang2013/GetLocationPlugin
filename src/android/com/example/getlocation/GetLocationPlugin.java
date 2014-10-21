@@ -6,19 +6,23 @@ import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import com.amap.map3d.demo.geocoder.GeocoderActivity;
-import com.amap.map3d.demo.location.LocationSourceActivity;
+import com.example.gaodemap.MainActivity;
+
+import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 
 
 public class GetLocationPlugin extends CordovaPlugin {
 	
 	private ProgressDialog mProgressDialog; 
+	public String message;
 	
 
 	public GetLocationPlugin() {
@@ -32,7 +36,7 @@ public class GetLocationPlugin extends CordovaPlugin {
 		this.callbackContext = callbackContext;
 
 		if (action.equals("intent")) {
-			String message = args.getString(0);
+			message = args.getString(0);
 			this.function();
 			return true;
 		}
@@ -44,10 +48,10 @@ public class GetLocationPlugin extends CordovaPlugin {
 		//MainActivity activity = new MainActivity(cordova.getActivity(),mHandle);
 		createProgressDialog();
 		Intent intent = new Intent();
-		intent.setClass(cordova.getActivity(), LocationSourceActivity.class);
+		intent.setClass(cordova.getActivity(), MainActivity.class);
 		cordova.getActivity().startActivity(intent);
 		
-		IntentFilter filter = new IntentFilter(LocationSourceActivity.action);  
+		IntentFilter filter = new IntentFilter(MainActivity.action);  
 		cordova.getActivity().registerReceiver(broadcastReceiver, filter); 
 		
 	}
@@ -57,43 +61,29 @@ public class GetLocationPlugin extends CordovaPlugin {
         @Override  
         public void onReceive(Context context, Intent intent) {  
 
+            
             String longitude = intent.getExtras().getString("longitude");
     		String latitude = intent.getExtras().getString("latitude");
-
+    		String address = intent.getExtras().getString("address");
+    		if (message.equals(longitude)) {
+    			callbackContext.success(longitude);
+			}else if (message.equals(latitude)) {
+				callbackContext.success(latitude);
+			}else{
+				callbackContext.success(address);			
+			}
+            
 			mProgressDialog.dismiss();
             cordova.getActivity().unregisterReceiver(broadcastReceiver);  
             
-            Intent intent1 = new Intent();
-    		intent1.setClass(cordova.getActivity(), GeocoderActivity.class);
-    		intent1.putExtra("longitude", longitude);  
-            intent1.putExtra("latitude", latitude); 
-    		cordova.getActivity().startActivity(intent1);
-    		
-    		IntentFilter filter = new IntentFilter(GeocoderActivity.action);  
-    		cordova.getActivity().registerReceiver(broadcastReceiver1, filter); 
+            
         }  
     };  
     
-    BroadcastReceiver broadcastReceiver1 = new BroadcastReceiver() {  
-		  
-        @Override  
-        public void onReceive(Context context, Intent intent) {  
-            // TODO Auto-generated method stub  
-
-            
-            String address = intent.getExtras().getString("address");
-    		
-            
-            callbackContext.success("¶aß}°G  "+address);			
-            cordova.getActivity().unregisterReceiver(broadcastReceiver1);  
-
-        }  
-    };
-
     
     private void createProgressDialog(){
         mProgressDialog=new ProgressDialog(cordova.getActivity());
-        mProgressDialog.setMessage("Ω–µyµ•...");
+        mProgressDialog.setMessage("Ë´ãÁ®çÁ≠â..");
         mProgressDialog.show();
     }
     

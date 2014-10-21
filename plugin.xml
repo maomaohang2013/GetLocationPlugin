@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-    id="org.apache.cordova"
-    version="0.0.1">
+    id="com.example.getlocation"
+    version="1.0.1">
     <name>GetLocationPlugin</name>
     <description>GetLocationPlugin Description</description>
     <author>jacky</author>
     <license>Apache 2.0 License</license>
+	
     <engines>
         <engine name="cordova" version=">=3.0.0" />
     </engines>
-    <js-module src="www/intent.js" name="intent">
-        <merges target="navigator.intent" />		
+	
+    <js-module src="www/getlocation.js" name="intent">
+        <clobbers target="window.plugins.GetLocationPlugin" />		
     </js-module>
+	
     <platform name="android">
         
         <config-file target="res/xml/config.xml" parent="/*">
@@ -21,15 +24,9 @@
         </config-file>
 		
 		<source-file src="src/android/com/example/getlocation/GetLocationPlugin.java" target-dir="src/com/example/getlocation" />
-		<source-file src="src/android/com/amap/map3d/demo/geocoder/GeocoderActivity.java" target-dir="src/com/amap/map3d/demo/geocoder" />
-		<source-file src="src/android/com/amap/map3d/demo/location/LocationSourceActivity.java" target-dir="src/com/amap/map3d/demo/location" />
-		<source-file src="src/android/com/amap/map3d/demo/util/ToastUtil.java" target-dir="src/com/amap/map3d/demo/util" />
-		<source-file src="src/android/com/amap/map3d/demo/view/FeatureView.java" target-dir="src/com/amap/map3d/demo/view" />
-		<source-file src="libs/AMap_3DMap_V2.3.0.jar" target-dir="libs" />
-		<source-file src="libs/AMap_Services_V2.3.0.jar" target-dir="libs/" />
+		<source-file src="src/android/com/example/getlocation/MainActivity.java" target-dir="src/com/example/getlocation" />
 		<source-file src="libs/Android_Location_V1.3.0.jar" target-dir="libs/" />
-		<source-file src="libs/armeabi/libamapv304.so" target-dir="libs/armeabi" />
-		<source-file src="libs/armeabi/libamapv304ex.so" target-dir="libs/armeabi" />
+
 		
 		<source-file src="res/layout/geocoder_activity.xml" target-dir="res/layout" />
 		<source-file src="res/layout/locationsource_activity.xml" target-dir="res/layout" />
@@ -52,18 +49,12 @@
         </config-file>
 		
 		<config-file target="AndroidManifest.xml" parent="/manifest/application">
-			<meta-data android:name="com.amap.api.v2.apikey" android:value="210bde4cf97f186b529cbbba81d804d0" />
+			<meta-data android:name="com.amap.api.v2.apikey" android:value="65645d0ba94b8c08291a6ff6ba3336cb" />
 			<activity
-            android:name="com.amap.map3d.demo.location.LocationSourceActivity"
-            android:label="locationsource_demo"
+            android:name="com.example.getlocation.MainActivity"
             android:theme="@android:style/Theme.NoDisplay"
             android:screenOrientation="portrait" />
-       
-        	<activity
-            android:name="com.amap.map3d.demo.geocoder.GeocoderActivity"
-            android:label="geocoder_demo"
-            android:theme="@android:style/Theme.NoDisplay"
-            android:screenOrientation="portrait" />
+     
 		</config-file>
     </platform>
 </plugin>
