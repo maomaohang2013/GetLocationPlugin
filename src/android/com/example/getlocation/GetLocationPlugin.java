@@ -65,9 +65,9 @@ public class GetLocationPlugin extends CordovaPlugin {
             String longitude = intent.getExtras().getString("longitude");
     		String latitude = intent.getExtras().getString("latitude");
     		String address = intent.getExtras().getString("address");
-    		if (message.equals(longitude)) {
+    		if (message.equals("longitude")) {
     			callbackContext.success(longitude);
-			}else if (message.equals(latitude)) {
+			}else if (message.equals("latitude")) {
 				callbackContext.success(latitude);
 			}else{
 				callbackContext.success(address);			
