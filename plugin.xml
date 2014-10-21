@@ -29,7 +29,7 @@
 		<source-file src="src/android/com/example/getlocation/MainActivity.java" target-dir="src/com/example/getlocation" />
 		<source-file src="libs/Android_Location_V1.3.0.jar" target-dir="libs/" />
 		
-		<source-file src="platforms/android/res/values/getlocation.xml" target-dir="res/values" />
+		<source-file src="res/values/getlocation.xml" target-dir="res/values" />
         <config-file target="res/values/getlocation.xml" parent="/*">
             <string name="gaode_key">$GAODE_KEY</string>
         </config-file>
