@@ -11,7 +11,7 @@
         <engine name="cordova" version=">=3.0.0" />
     </engines>
 	
-    <js-module src="www/getlocation.js" name="intent">
+    <js-module src="www/getlocation.js" name="GetLocationPlugin">
         <clobbers target="window.plugins.GetLocationPlugin" />		
     </js-module>
 	

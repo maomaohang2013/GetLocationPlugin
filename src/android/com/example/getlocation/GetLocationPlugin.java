@@ -6,7 +6,7 @@ import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import com.example.gaodemap.MainActivity;
+import com.example.getlocation.MainActivity;
 
 import android.app.Application;
 import android.app.ProgressDialog;
@@ -35,7 +35,7 @@ public class GetLocationPlugin extends CordovaPlugin {
 			CallbackContext callbackContext) throws JSONException {
 		this.callbackContext = callbackContext;
 
-		if (action.equals("intent")) {
+		if (action.equals("getlocation")) {
 			message = args.getString(0);
 			this.function();
 			return true;
