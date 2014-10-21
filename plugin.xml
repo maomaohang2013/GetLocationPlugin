@@ -15,7 +15,6 @@
         <clobbers target="window.plugins.GetLocationPlugin" />		
     </js-module>
 	
-	<preference name="GAODE_KEY" />
 	
     <platform name="android">
         
@@ -29,10 +28,7 @@
 		<source-file src="src/android/com/example/getlocation/MainActivity.java" target-dir="src/com/example/getlocation" />
 		<source-file src="libs/Android_Location_V1.3.0.jar" target-dir="libs/" />
 		
-		<source-file src="platforms/android/res/values/getlocation.xml" target-dir="res/values" />
-        <config-file target="res/values/getlocation.xml" parent="/*">
-            <string name="gaode_key">$GAODE_KEY</string>
-        </config-file>
+
 
 		
         <config-file target="AndroidManifest.xml" parent="/*">
@@ -53,7 +49,7 @@
         </config-file>
 		
 		<config-file target="AndroidManifest.xml" parent="/manifest/application">
-			<meta-data android:name="com.amap.api.v2.apikey" android:value="@string/gaode_key" />
+			<meta-data android:name="com.amap.api.v2.apikey" android:value="65645d0ba94b8c08291a6ff6ba3336cb" />
 			<activity
             android:name="com.example.getlocation.MainActivity"
             android:theme="@android:style/Theme.NoDisplay"
