@@ -75,9 +75,9 @@
         <source-file src="src/ios/Plugins/BaseMapViewController.m" />
 		<header-file src="src/ios/Plugins/GetLocationPlugin.h" />
         <source-file src="src/ios/Plugins/GetLocationPlugin.m" />
-		
+		<header-file src="src/ios/Plugins/APIKey.h" />
 		<resource-file src="src/ios/Framework/MAMapKit.framework/Resources/AMap.bundle" />
-		<resource-file src="src/ios/Plugins/Configuration/APIKey.h" />
+		
 
         <config-file target="*-Info.plist" parent="GAODE_KEY">
             <string>$GAODE_KEY</string>

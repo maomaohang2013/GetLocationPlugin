@@ -18,6 +18,14 @@
 
 - (void)configureAPIKey
 {
+    
+    NSString* File = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc] initWithContentsOfFile:File];
+    
+    NSLog(@"key: %@",[dict objectForKey:@"GAODE_KEY"]);
+    APIKey = [dict objectForKey:@"GAODE_KEY"];
+    NSLog(@"key: %@",APIKey);
+
     if ([APIKey length] == 0)
     {
 #define kMALogTitle @"提示"

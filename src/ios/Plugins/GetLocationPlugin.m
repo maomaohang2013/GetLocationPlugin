@@ -7,7 +7,7 @@ static NSString *message,*callbackID,*address,*latitude,*longitude;
 @implementation GetLocationPlugin
 
 - (void)getlocation:(CDVInvokedUrlCommand*)command {
-
+   
     message  = [command.arguments objectAtIndex:0];
     
     callbackID = command.callbackId;
