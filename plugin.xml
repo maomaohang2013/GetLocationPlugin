@@ -62,4 +62,45 @@
      
 		</config-file>
     </platform>
+	
+	<!-- ios -->
+    <platform name="ios">
+	    <config-file target="config.xml" parent="/*">
+		    <feature name="GetLocationPlugin">
+			    <param name="ios-package" value="GetLocationPlugin"/>
+		    </feature>
+		    <plugin name="GetLocationPlugin" value="GetLocationPlugin"/>
+	    </config-file>
+
+        <header-file src="src/ios/Plugins/BaseMapViewController.h" />
+        <source-file src="src/ios/Plugins/BaseMapViewController.m" />
+		<header-file src="src/ios/Plugins/Toast.h" />
+        <source-file src="src/ios/Plugins/Toast.m" />
+
+        <config-file target="*-Info.plist" parent="GAODE_KEY">
+            <string>$GAODE_KEY</string>
+        </config-file>
+		
+		<config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+            <string></string>
+        </config-file>
+
+        <!-- GetLocationPlugin framework -->
+        <framework src="src/ios/Framework/AMapSearchKit.framework" custom="true" />
+		<framework src="src/ios/Framework/MAMapKit.framework" custom="true" />
+                
+        <!-- System frameworks -->
+
+		<framework src="libz.dylib" />
+        <framework src="libstdc++6.09.dylib" />
+        <framework src="QuartzCore.framework" weak="true" />
+        <framework src="CoreLocation.framework" weak="true" />
+        <framework src="SystemConfiguration.framework" weak="true" />
+		<framework src="CoreTelephony.framework" weak="true" />
+		<framework src="OpenGLES.framework" weak="true" />
+        <framework src="Security.framework" weak="true" />
+
+    </platform>
+	
+	
 </plugin>
