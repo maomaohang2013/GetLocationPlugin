@@ -4,7 +4,7 @@
 
 @interface GetLocationPlugin : CDVPlugin
 
-- (void)show:(CDVInvokedUrlCommand*)command;
+- (void)getlocation:(CDVInvokedUrlCommand*)command;
 
 @end
 
