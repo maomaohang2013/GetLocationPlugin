@@ -1,12 +1,12 @@
-#import "Toast.h"
+#import "GetLocationPlugin.h"
 #import "BaseMapViewController.h"
 
 
 static NSString *message,*callbackID,*address,*latitude,*longitude;
 
-@implementation Toast
+@implementation GetLocationPlugin
 
-- (void)show:(CDVInvokedUrlCommand*)command {
+- (void)getlocation:(CDVInvokedUrlCommand*)command {
 
     message  = [command.arguments objectAtIndex:0];
     

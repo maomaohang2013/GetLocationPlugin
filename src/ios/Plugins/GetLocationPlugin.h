@@ -2,7 +2,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface Toast : CDVPlugin
+@interface GetLocationPlugin : CDVPlugin
 
 - (void)show:(CDVInvokedUrlCommand*)command;
 

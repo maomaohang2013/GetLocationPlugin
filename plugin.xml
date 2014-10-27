@@ -73,8 +73,8 @@
 
         <header-file src="src/ios/Plugins/BaseMapViewController.h" />
         <source-file src="src/ios/Plugins/BaseMapViewController.m" />
-		<header-file src="src/ios/Plugins/Toast.h" />
-        <source-file src="src/ios/Plugins/Toast.m" />
+		<header-file src="src/ios/Plugins/GetLocationPlugin.h" />
+        <source-file src="src/ios/Plugins/GetLocationPlugin.m" />
 		
 		<resource-file src="src/ios/Framework/MAMapKit.framework/Resources/AMap.bundle" />
 		<resource-file src="src/ios/Plugins/Configuration/APIKey.h" />
@@ -94,13 +94,13 @@
         <!-- System frameworks -->
 
 		<framework src="libz.dylib" />
-        <framework src="libstdc++6.09.dylib"  weak="true" />
-        <framework src="QuartzCore.framework" weak="true" />
-        <framework src="CoreLocation.framework" weak="true" />
-        <framework src="SystemConfiguration.framework" weak="true" />
-		<framework src="CoreTelephony.framework" weak="true" />
-		<framework src="OpenGLES.framework" weak="true" />
-        <framework src="Security.framework" weak="true" />
+        <framework src="libstdc++.6.0.9.dylib" />
+        <framework src="QuartzCore.framework" />
+        <framework src="CoreLocation.framework" />
+        <framework src="SystemConfiguration.framework" />
+		<framework src="CoreTelephony.framework" />
+		<framework src="OpenGLES.framework" />
+        <framework src="Security.framework" />
 
     </platform>
 	
