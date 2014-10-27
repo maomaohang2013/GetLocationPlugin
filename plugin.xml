@@ -76,7 +76,7 @@
 		<header-file src="src/ios/Plugins/Toast.h" />
         <source-file src="src/ios/Plugins/Toast.m" />
 		
-		<resource-file src="src/ios/Framework/Resources/AMap.bundle" />
+		<resource-file src="src/ios/Framework/MAMapKit.framework/Resources/AMap.bundle" />
 		<resource-file src="src/ios/Plugins/Configuration/APIKey.h" />
 
         <config-file target="*-Info.plist" parent="GAODE_KEY">
