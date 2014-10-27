@@ -15,7 +15,7 @@
         <clobbers target="window.plugins.GetLocationPlugin" />		
     </js-module>
 	
-	<preference name="GAODE_KEY" />
+	<preference name="GAODE_KEY" value="gaode_key"  />
 	
     <platform name="android">
         
