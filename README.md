@@ -1,6 +1,6 @@
 <h1><a class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>PhoneGap GetLocation plugin</h1>
 <h2>
-<a name="user-content-0-index" class="anchor" href="#0-index" aria-hidden="true"><span class="octicon octicon-link"></span></a>0. Index
+<a name="user-content-0-index" class="anchor" href="#0-index" aria-hidden="true"><span class="octicon octicon-link"></span></a>Index
 </h2>
 <ol class="task-list">
 <li><a href="#1-description">Description</a></li>
