@@ -17,12 +17,12 @@
 <a name="user-content-1-description" class="anchor" href="#1-description" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Description
 </h2>
 
-<p>This plugin allows you to get an address where you are by &quot;高德地圖API&quot; on iOS and Android.</p>
+<p>This plugin allows you to get an address where you are by <a href="http://lbs.amap.com/">高德地圖API</a> on iOS and Android.</p>
 
 <h2>
 <a name="user-content-3-installation" class="anchor" href="#3-installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Installation</h2>
 
-<p>To use this plugin you will need to make sure you've created your account with <a href="http://lbs.amap.com/">"高德地圖API"</a> and have an <code>GAODE_KEY</code></p>
+<p>To use this plugin you will need to make sure you've created your account with <a href="http://lbs.amap.com/">高德地圖API</a> and have an <code>GAODE_KEY</code></p>
 
 <h3>
 <a name="user-content-automatically-cli--plugman" class="anchor" href="#automatically-cli--plugman" aria-hidden="true"><span class="octicon octicon-link"></span></a>Automatically</h3>
