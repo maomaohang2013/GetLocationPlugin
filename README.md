@@ -24,8 +24,8 @@
 
 <p>To use this plugin you will need to make sure you've created your account with <a href="http://lbs.amap.com/">高德地圖API</a> and have an <code>GAODE_KEY</code></p>
 
-<h3>
-<a name="user-content-automatically-cli--plugman" class="anchor" href="#automatically-cli--plugman" aria-hidden="true"><span class="octicon octicon-link"></span></a>Automatically</h3>
+<h4>
+<a name="user-content-automatically-cli--plugman" class="anchor" href="#automatically-cli--plugman" aria-hidden="true"><span class="octicon octicon-link"></span></a>Automatically</h4>
 
 <p>This plugin requires Cordova CLI.
 
@@ -34,8 +34,8 @@ To install the plugin in your app, execute the following (replace variables wher
 <pre><code>$ cordova plugin add https://github.com/maomaohang2013/GetLocationPlugin.git --variable GAODE_KEY="123456789"
 </code></pre>
 
-<h3>
-<a name="user-content-phonegap-build" class="anchor" href="#phonegap-build" aria-hidden="true"><span class="octicon octicon-link"></span></a>PhoneGap Build</h3>
+<h4>
+<a name="user-content-phonegap-build" class="anchor" href="#phonegap-build" aria-hidden="true"><span class="octicon octicon-link"></span></a>PhoneGap Build</h4>
 
 <p>The plugin works with PhoneGap build too, but only with PhoneGap 3.0 and up.</p>
 
