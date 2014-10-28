@@ -63,9 +63,9 @@ To install the plugin in your app, execute the following (replace variables wher
 </div>
 </pre>
 
-<h4>get longitude</h4>
+<h4>get latitude</h4>
 <div class="highlight highlight-html">
-<pre>window.plugins.GetLocationPlugin.getlocation("longitude",successCallback,errorCallback);</pre>
+<pre>window.plugins.GetLocationPlugin.getlocation("latitude",successCallback,errorCallback);</pre>
 </div>
 </pre>
 
