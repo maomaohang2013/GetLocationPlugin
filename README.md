@@ -50,6 +50,25 @@ To install the plugin in your app, execute the following (replace variables wher
 
 <h2>
 <a name="user-content-4-usage" class="anchor" href="#4-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Usage</h2>
+
+<h4>get address</h4>
+<div class="highlight highlight-html">
+<pre>window.plugins.GetLocationPlugin.getlocation("address",successCallback,errorCallback);</pre>
+</div>
+</pre>
+
+<h4>get longitude</h4>
+<div class="highlight highlight-html">
+<pre>window.plugins.GetLocationPlugin.getlocation("longitude",successCallback,errorCallback);</pre>
+</div>
+</pre>
+
+<h4>get longitude</h4>
+<div class="highlight highlight-html">
+<pre>window.plugins.GetLocationPlugin.getlocation("longitude",successCallback,errorCallback);</pre>
+</div>
+</pre>
+
 <p>You can copy-paste these lines of code for a quick test:</p>
 <div class="highlight highlight-html">
 <pre>
