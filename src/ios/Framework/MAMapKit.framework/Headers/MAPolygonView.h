@@ -1,25 +1,23 @@
 //
 //  MAPolygonView.h
-//  MAMapKit
+//  MAMapKitNew
 //
-//  
-//  Copyright (c) 2011年 Autonavi Inc. All rights reserved.
+//  Created by AutoNavi.
+//  Copyright (c) 2014年 AutoNavi. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
-#import "MAPolygon.h"
 #import "MAOverlayPathView.h"
+#import "MAPolygon.h"
 
 /*!
- @brief 此类是MAPolygon的显示多边形view,可以通过MAOverlayPathView修改其fill和stroke attributes
+ @brief 此类是MAPolygon的显示多边形View,可以通过MAOverlayPathView修改其fill和stroke attributes
  */
 @interface MAPolygonView : MAOverlayPathView
 
 /*!
- @brief 根据指定的多边形生成一个多边形View
+ @brief 根据指定的多边形生成一个多边形view
  @param polygon 指定的多边形数据对象
- @return 新生成的多边形View
+ @return 新生成的多边形view
  */
 - (id)initWithPolygon:(MAPolygon *)polygon;
 

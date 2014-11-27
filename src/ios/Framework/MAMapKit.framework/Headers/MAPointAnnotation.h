@@ -1,13 +1,12 @@
 //
 //  MAPointAnnotation.h
-//  MAMapKitDemo
+//  MAMapKit
 //
-//  Created by songjian on 13-1-7.
-//  Copyright (c) 2013年 songjian. All rights reserved.
+//  Created by AutoNavi.
+//  Copyright (c) 2013年 AutoNavi. All rights reserved.
 //
 
 #import "MAShape.h"
-#import <CoreLocation/CLLocation.h>
 
 /*!
  @brief 点标注数据

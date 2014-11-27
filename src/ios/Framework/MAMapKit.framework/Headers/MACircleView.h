@@ -1,16 +1,16 @@
 //
 //  MACircleView.h
-//  MAMapKit
+//  MAMapKitNew
 //
-//  Created by yin cai on 11-12-30.
-//  Copyright (c) 2011年 __MyCompanyName__. All rights reserved.
+//  Created by AutoNavi.
+//  Copyright (c) 2014年 AutoNavi. All rights reserved.
 //
 
-#import "MACircle.h"
 #import "MAOverlayPathView.h"
+#import "MACircle.h"
 
 /*!
- @brief 该类是MACircle的显示圆view,可以通过MAOverlayPathView修改其fill和stroke attributes
+ @brief 该类是MACircle的显示圆View,可以通过MAOverlayPathView修改其fill和stroke attributes
  */
 @interface MACircleView : MAOverlayPathView
 

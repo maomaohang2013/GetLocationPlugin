@@ -1,30 +1,23 @@
 //
 //  MAGroundOverlay.h
-//  MapKit_static
+//  DevDemo2D
 //
-//  Created by Li Fei on 11/12/13.
-//  Copyright (c) 2013 songjian. All rights reserved.
+//  Created by AutoNavi.
+//  Copyright (c) 2014年 AutoNavi. All rights reserved.
 //
-
-#import <UIKit/UIKit.h>
 
 #import "MAShape.h"
 #import "MAOverlay.h"
 
 /*!
- @brief 该类用于确定覆盖在地图上的图片，及其覆盖区域, 通常MAGroundOverlay是MAGroundOverlayView的model
+ @brief 该类用于确定覆盖在地图上的图片，及其覆盖区域, 通常MAGroundOverlay是MAGroundOverlayRenderer的model
  */
-@interface MAGroundOverlay : MAShape<MAOverlay>
+@interface MAGroundOverlay : MAShape <MAOverlay>
 
 /*!
  @brief 绘制在地图上的覆盖图片
  */
 @property (nonatomic, readonly) UIImage *icon;
-
-/*!
- @brief 透明度. 最终透明度 = 纹理透明度 * alpha. 有效范围为[0.f, 1.f], 默认为1.f
- */
-@property (nonatomic) CGFloat alpha;
 
 /*!
  @brief 覆盖图片在地图尺寸等同于其像素的zoom值
@@ -55,4 +48,5 @@
 + (instancetype)groundOverlayWithCoordinate:(CLLocationCoordinate2D)coordinate
                                   zoomLevel:(CGFloat)zoomLevel
                                        icon:(UIImage *)icon;
+
 @end

@@ -1,28 +1,25 @@
 //
 //  MAAnnotationView.h
-//  MAMapKitDemo
+//  MAMapKit
 //
-//  Created by songjian on 13-1-7.
-//  Copyright (c) 2013年 songjian. All rights reserved.
+//  Created by AutoNavi.
+//  Copyright (c) 2013年 AutoNavi. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
 #if (__IPHONE_4_0 <= __IPHONE_OS_VERSION_MAX_ALLOWED)
 
-enum {
-    MAAnnotationViewDragStateNone = 0,      // View is at rest, sitting on the map.
-    MAAnnotationViewDragStateStarting,      // View is beginning to drag (e.g. pin lift)
-    MAAnnotationViewDragStateDragging,      // View is dragging ("lift" animations are complete)
-    MAAnnotationViewDragStateCanceling,     // View was not dragged and should return to it's starting position (e.g. pin drop)
-    MAAnnotationViewDragStateEnding         // View was dragged, new coordinate is set and view should return to resting position (e.g. pin drop)
+typedef NS_ENUM(NSInteger, MAAnnotationViewDragState) {
+    MAAnnotationViewDragStateNone = 0,      ///< 静止状态
+    MAAnnotationViewDragStateStarting,      ///< 开始拖动
+    MAAnnotationViewDragStateDragging,      ///< 拖动中
+    MAAnnotationViewDragStateCanceling,     ///< 取消拖动
+    MAAnnotationViewDragStateEnding         ///< 拖动结束
 };
 
-typedef NSUInteger MAAnnotationViewDragState;
+#endif
 
-#endif // #if (__IPHONE_4_0 <= __IPHONE_OS_VERSION_MAX_ALLOWED)
-
-@class MAAnnotationViewInternal;
 @protocol MAAnnotation;
 
 /*!
@@ -33,7 +30,7 @@ typedef NSUInteger MAAnnotationViewDragState;
 /*!
  @brief 初始化并返回一个annotation view
  @param annotation 关联的annotation对象
- @param reuseIdentifier 如果要重用view,传入一个字符串,否则设为nil,建议重用view
+ @param reuseIdentifier 如果要复用view,传入一个字符串,否则设为nil,建议重用view
  @return 初始化成功则返回annotation view,否则返回nil
  */
 - (id)initWithAnnotation:(id <MAAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier;
@@ -41,7 +38,7 @@ typedef NSUInteger MAAnnotationViewDragState;
 /*!
  @brief 复用标识
  */
-@property (nonatomic, readonly, copy) NSString *reuseIdentifier;
+@property (nonatomic, readonly) NSString *reuseIdentifier;
 
 /*!
  @brief 当从reuse队列里取出时被调用
@@ -59,12 +56,12 @@ typedef NSUInteger MAAnnotationViewDragState;
 @property (nonatomic, strong) UIImage *image;
 
 /*!
- @brief 默认情况下, annotation view的中心位于annotation的坐标位置，可以设置centerOffset改变view的位置，正的偏移使view朝右下方移动，负的朝左上方，单位是像素
+ @brief 默认情况下，annotation view的中心位于annotation的坐标位置，可以设置centerOffset改变view的位置，正的偏移使view朝右下方移动，负的朝左上方，单位是像素
  */
 @property (nonatomic) CGPoint centerOffset;
 
 /*!
- @brief 默认情况下, 弹出的气泡位于view正中上方，可以设置calloutOffset改变view的位置，正的偏移使view朝右下方移动，负的朝左上方，单位是像素
+ @brief 默认情况下，弹出的气泡位于view正中上方，可以设置calloutOffset改变view的位置，正的偏移使view朝右下方移动，负的朝左上方，单位是像素
  */
 @property (nonatomic) CGPoint calloutOffset;
 
@@ -73,6 +70,9 @@ typedef NSUInteger MAAnnotationViewDragState;
  */
 @property (nonatomic, getter=isEnabled) BOOL enabled;
 
+/*!
+ @brief annotationView是否突出显示(一般不需要手动设置)
+ */
 @property (nonatomic, getter=isHighlighted) BOOL highlighted;
 
 /*!
@@ -81,27 +81,30 @@ typedef NSUInteger MAAnnotationViewDragState;
 @property (nonatomic, getter=isSelected) BOOL selected;
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated;
 
+/*!
+ @brief 设置是否可以显示callout,默认为NO
+ */
 @property (nonatomic) BOOL canShowCallout;
 
 /*!
  @brief 显示在气泡左侧的view
  */
-@property (strong, nonatomic) UIView *leftCalloutAccessoryView;
+@property (retain, nonatomic) UIView *leftCalloutAccessoryView;
 
 /*!
  @brief 显示在气泡右侧的view
  */
-@property (strong, nonatomic) UIView *rightCalloutAccessoryView;
+@property (retain, nonatomic) UIView *rightCalloutAccessoryView;
 
 /*!
- @brief 是否支持拖动
+ @brief 是否支持拖动,默认为NO
  */
-@property (nonatomic, getter=isDraggable) BOOL draggable NS_AVAILABLE(NA, 4_0);
+@property (nonatomic, getter=isDraggable) BOOL draggable;
 
 /*!
  @brief 当前view的拖动状态
  */
-@property (nonatomic) MAAnnotationViewDragState dragState NS_AVAILABLE(NA, 4_0);
-- (void)setDragState:(MAAnnotationViewDragState)newDragState animated:(BOOL)animated NS_AVAILABLE(NA, 4_2);
+@property (nonatomic) MAAnnotationViewDragState dragState;
+- (void)setDragState:(MAAnnotationViewDragState)newDragState animated:(BOOL)animated;
 
 @end

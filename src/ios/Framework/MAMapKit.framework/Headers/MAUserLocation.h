@@ -2,8 +2,8 @@
 //  MAUserLocation.h
 //  MAMapKit
 //
-//  Created by yin cai on 12-1-4.
-//  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
+//  Created by AutoNavi.
+//  Copyright (c) 2012年 AutoNavi. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -28,7 +28,7 @@
 @property (readonly, nonatomic, retain) CLLocation *location;
 
 /*!
- @brief heading信息
+ @brief heading信息, 只有在 MAUserTrackingModeFollowWithHeading 模式下才有值。
  */
 @property (readonly, nonatomic, retain) CLHeading *heading;
 
@@ -43,3 +43,4 @@
 @property (nonatomic, copy) NSString *subtitle;
 
 @end
+

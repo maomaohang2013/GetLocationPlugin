@@ -1,119 +1,67 @@
 //
 //  MAMapView.h
-//  MAMapKitDemo
+//  MAMapKit
 //
-//  Created by songjian on 12-12-21.
-//  Copyright (c) 2012年 songjian. All rights reserved.
+//  Created by AutoNavi.
+//  Copyright (c) 2013年 AutoNavi. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "MATypes.h"
+#import "MAGeometry.h"
 #import "MAOverlay.h"
-#import "MAOverlayView.h"
+#import "MAOverlayRenderer.h"
 #import "MAAnnotationView.h"
-#import "MAAnnotation.h"
+#import "MAOverlayView.h"
 
-/**
- * MAMapView 的layer 支持中心点, 缩放级别, 旋转角度, 摄像机俯视角度. 这四个地图状态属性的CABasicAnimation, CAKeyframeAnimation.
- *
- * ***************************************************
- * 说明
- *
- * CAMediaTimingFunction 支持的类型如下:
- * 1> kCAMediaTimingFunctionLinear (default)
- * 2> kCAMediaTimingFunctionEaseIn
- * 3> kCAMediaTimingFunctionEaseOut
- * 4> kCAMediaTimingFunctionEaseInEaseOut
- *
- * CAAnimation 支持的变量如下:
- * 1> duration
- * 2> timingFunction
- * 3> delegate
- *
- * CAPropertyAnimation 支持的变量如下:
- * 1> keyPath
- *
- * CABasicAnimation 支持的变量如下:
- * 1> fromValue
- * 2> toValue
- *
- * CAKeyframeAnimation 支持的变量如下:
- * 1> values
- * 2> keyTimes
- * 3> timingFunctions
- *
- * *****************************************************
- *    Add CABasicAnimation Example:
- *
- *    CLLocationCoordinate2D toCoordiante = CLLocationCoordinate2DMake(39.989870, 116.480940);
- *    CABasicAnimation *centerAnimation = [CABasicAnimation animationWithKeyPath:kMAMapLayerCenterMapPointKey];
- *    centerAnimation.duration       = 3.f;
- *    centerAnimation.toValue        = [NSValue valueWithMAMapPoint:MAMapPointForCoordinate(toCoordiante)];
- *    centerAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
- *    [mapView.layer addAnimation:centerAnimation forKey:kMAMapLayerCenterMapPointKey];
- *
- *    Add CAKeyframeAnimation Example:
- *
- *    CAKeyframeAnimation *zoomLevelAnimation = [CAKeyframeAnimation animationWithKeyPath:kMAMapLayerZoomLevelKey];
- *    zoomLevelAnimation.duration = 3.f;
- *    zoomLevelAnimation.values   = @[@(15), @(12), @(18)];
- *    zoomLevelAnimation.keyTimes = @[@(0.f), @(0.4f), @(1.f)];
- *    [mapView.layer addAnimation:zoomLevelAnimation forKey:kMAMapLayerZoomLevelKey];
- *
- *    Remove animation Example:
- *    [mapView.layer removeAnimationForKey:kMAMapLayerZoomLevelKey];
- *
- **/
-
-/*!
- @brief 中心点(MAMapPoint)key, 封装成[NSValue valueWithMAMapPoint:].
- */
-extern NSString * const kMAMapLayerCenterMapPointKey;
-
-/*!
- @brief 缩放级别key, 范围[minZoomLevel, maxZoomLevel], 封装成NSNumber.
- */
-extern NSString * const kMAMapLayerZoomLevelKey;
-
-/*!
- @brief 旋转角度key, 范围[0, 360), 封装成NSNumber.
- */
-extern NSString * const kMAMapLayerRotationDegreeKey;
-
-/*!
- @brief 摄像机俯视角度, 范围[0, 45], 封装成NSNumber.
- */
-extern NSString * const kMAMapLayerCameraDegreeKey;
-
-
-enum {
-	MAUserTrackingModeNone = 0, // the user's location is not followed
-	MAUserTrackingModeFollow, // the map follows the user's location
-	MAUserTrackingModeFollowWithHeading, // the map follows the user's location and heading
+typedef NS_ENUM(NSInteger, MAMapType)
+{
+    MAMapTypeStandard,  // 普通地图
+    MAMapTypeSatellite  // 卫星地图
 };
 
-typedef NSInteger MAUserTrackingMode;
-
-@class MAUserLocation;
-@class MATouchPoi;
-@class MACircle;
+typedef NS_ENUM(NSInteger, MAUserTrackingMode)
+{
+    MAUserTrackingModeNone              = 0,    // 不追踪用户的location更新
+	MAUserTrackingModeFollow            = 1,    // 追踪用户的location更新
+	MAUserTrackingModeFollowWithHeading = 2     // 追踪用户的location与heading更新
+};
 
 @protocol MAMapViewDelegate;
 
-/*!
- @brief 地图view
- */
+@class MAUserLocation;
+@class MAAnnotationView;
+@class MAUserLocationRepresentation;
+
 @interface MAMapView : UIView
 
+#pragma mark - Properties
+
 /*!
- @brief 代理
+ @brief 地图View的Delegate
  */
-@property (nonatomic, assign) id <MAMapViewDelegate> delegate;
+@property (nonatomic, assign) id<MAMapViewDelegate> delegate;
 
 /*!
  @brief 地图类型
  */
-@property (nonatomic) MAMapType mapType;
+@property (nonatomic, assign) MAMapType mapType;
+
+/*!
+ @brief 是否显示交通，默认为NO
+ */
+@property (nonatomic, assign, getter = isShowTraffic) BOOL showTraffic;
+
+/*!
+ @brief 是否支持平移，默认为YES
+ */
+@property (nonatomic, assign, getter = isScrollEnabled) BOOL scrollEnabled;
+
+/*!
+ @brief 是否支持缩放，默认为YES
+ */
+@property (nonatomic, assign, getter = isZoomEnabled) BOOL zoomEnabled;
+
+#pragma mark - Logo
 
 /*!
  @brief logo位置, 必须在mapView.bounds之内，否则会被忽略
@@ -125,63 +73,10 @@ typedef NSInteger MAUserTrackingMode;
  */
 @property (nonatomic, readonly) CGSize logoSize;
 
-/*!
- @brief 是否显示交通
- */
-@property (nonatomic, getter = isShowTraffic) BOOL showTraffic;
+#pragma mark - Compass
 
 /*!
- @brief 是否隐藏楼块, 默认为NO
- */
-@property (nonatomic, getter = isBuildingsDisabled) BOOL buildingsDisabled;
-
-/*!
- @brief 是否支持缩放
- */
-@property (nonatomic, getter = isZoomEnabled) BOOL zoomEnabled;
-
-/*!
- @brief 是否支持平移
- */
-@property (nonatomic, getter = isScrollEnabled) BOOL scrollEnabled;
-
-/*!
- @brief 是否支持旋转
- */
-@property (nonatomic, getter = isRotateEnabled) BOOL rotateEnabled;
-
-/*!
- @brief 是否支持单击地图获取POI信息(默认为NO)
- 对应的回调是 - (void)mapView:(MAMapView *)mapView didTouchPois:(NSArray *)pois
- */
-@property (nonatomic) BOOL touchPOIEnabled;
-
-/*!
- @brief 设置地图旋转角度(逆时针为正向)
- */
-@property (nonatomic) CGFloat rotationDegree;
-
-/*!
- @brief 设置地图旋转角度(逆时针为正向)
- @param animated 动画
- @param duration 动画时间
- */
-- (void)setRotationDegree:(CGFloat)rotationDegree animated:(BOOL)animated duration:(CFTimeInterval)duration;
-
-/*!
- @brief 设置地图相机角度(范围为[0.f, 45.f])
- */
-@property (nonatomic) CGFloat cameraDegree;
-
-- (void)setCameraDegree:(CGFloat)cameraDegree animated:(BOOL)animated duration:(CFTimeInterval)duration;
-
-/*!
- @brief 是否支持camera旋转
- */
-@property (nonatomic, getter = isRotateCameraEnabled) BOOL rotateCameraEnabled;
-
-/*!
- @brief 是否显示罗盘
+ @brief 是否显示罗盘，默认为YES
  */
 @property (nonatomic, assign) BOOL showsCompass;
 
@@ -195,8 +90,10 @@ typedef NSInteger MAUserTrackingMode;
  */
 @property (nonatomic, readonly) CGSize compassSize;
 
+#pragma mark - Scale
+
 /*!
- @brief 是否显示比例尺
+ @brief 是否显示比例尺，默认为YES
  */
 @property (nonatomic) BOOL showsScale;
 
@@ -210,126 +107,159 @@ typedef NSInteger MAUserTrackingMode;
  */
 @property (nonatomic, readonly) CGSize scaleSize;
 
+
 /*!
  @brief 在当前缩放级别下, 基于地图中心点, 1 screen point 对应的距离(单位是米).
  @return 对应的距离(单位是米)
  */
-- (double)metersPerPointForCurrentZoomLevel;
+- (CGFloat)metersPerPointForCurrentZoomLevel;
 
 /*!
  @brief 在指定的缩放级别下, 基于地图中心点, 1 screen point 对应的距离(单位是米).
  @param zoomLevel 指定的缩放级别, 在[minZoomLevel, maxZoomLevel]范围内.
  @return 对应的距离(单位是米)
  */
-- (double)metersPerPointForZoomLevel:(CGFloat)zoomLevel;
+- (CGFloat)metersPerPointForZoomLevel:(CGFloat)zoomLevel;
+
+#pragma mark - Movement
+
+/*!
+ @brief 当前地图的中心点经纬度坐标，改变该值时，地图缩放级别不会发生变化
+ */
+@property (nonatomic, assign) CLLocationCoordinate2D centerCoordinate;
+
+/*!
+ @brief 设定地图中心点经纬度
+ @param coordinate 要设定的地图中心点经纬度
+ @param animated 是否采用动画效果
+ */
+- (void)setCenterCoordinate:(CLLocationCoordinate2D)centerCoordinate animated:(BOOL)animated;
 
 /*!
  @brief 当前地图的经纬度范围，设定的该范围可能会被调整为适合地图窗口显示的范围
  */
-@property (nonatomic) MACoordinateRegion region;
+@property (nonatomic, assign) MACoordinateRegion region;
+
+/*!
+ @brief 设定当前地图的region
+ @param region 要设定的地图范围，用经纬度的方式表示
+ @param animated 是否采用动画效果
+ */
 - (void)setRegion:(MACoordinateRegion)region animated:(BOOL)animated;
 
 /*!
- @brief 当前地图的中心点，改变该值时，地图的比例尺级别不会发生变化
- */
-@property (nonatomic) CLLocationCoordinate2D centerCoordinate;
-- (void)setCenterCoordinate:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated;
-
-/*!
- @brief 根据当前地图视图frame的大小调整region范围
+ @brief 根据当前地图视图frame的大小调整region范围，返回适合当前地图frame的region，调整过程中当前地图的中心点不会改变
  @param region 要调整的经纬度范围
  @return 调整后的经纬度范围
  */
 - (MACoordinateRegion)regionThatFits:(MACoordinateRegion)region;
 
 /*!
- @brief 可见区域
+ @brief 当前地图可见范围的map rect
  */
-@property (nonatomic) MAMapRect visibleMapRect;
+@property (nonatomic, assign) MAMapRect visibleMapRect;
+
+/*!
+ @brief 设置当前地图可见范围的map rect
+ @param mapRect 要调整的map rect
+ @param animated 是否采用动画效果
+ */
 - (void)setVisibleMapRect:(MAMapRect)mapRect animated:(BOOL)animated;
 
 /*!
- @brief 缩放级别
+ @brief 设置当前地图可见范围的map rect
+ @param mapRect 要设置的map rect
+ @param insets 嵌入边界
+ @param animated 是否采用动画效果
  */
-@property (nonatomic) CGFloat zoomLevel;
-- (void)setZoomLevel:(CGFloat)zoomLevel animated:(BOOL)animated;
+- (void)setVisibleMapRect:(MAMapRect)mapRect edgePadding:(UIEdgeInsets)insets animated:(BOOL)animated;
 
 /*!
- @brief 根据指定的枢纽点来缩放地图
- @param zoomLevel 缩放级别
- @param pivot 枢纽点(基于地图view的坐标系)
- @param animated 是否动画
- */
-- (void)setZoomLevel:(CGFloat)zoomLevel atPivot:(CGPoint)pivot animated:(BOOL)animated;
-
-/*!
- @brief 最小缩放级别
- */
-@property (nonatomic, readonly) CGFloat minZoomLevel;
-
-/*!
- @brief 最大缩放级别
- */
-@property (nonatomic, readonly) CGFloat maxZoomLevel;
-
-/*!
- @brief 调整投影矩形比例
- @param mapRect 要调整的投影矩形
- @return 调整后的投影矩形
+ @brief 调整map rect使其适合地图窗口显示的范围
+ @param mapRect 要调整的map rect
+ @return 调整后的maprect
  */
 - (MAMapRect)mapRectThatFits:(MAMapRect)mapRect;
 
 /*!
- @brief 根据当前地图视图frame的大小调整投影范围
- @param mapRect 要调整的投影范围
- @return 调整后的投影范围
- */
-- (void)setVisibleMapRect:(MAMapRect)mapRect edgePadding:(UIEdgeInsets)insets animated:(BOOL)animate;
-
-/*!
- @brief 根据嵌入数据来调整投影矩形比例
- @param mapRect 要调整的投影矩形
- @param insets 嵌入数据
- @return 调整后的投影矩形
+ @brief 调整map rect使其适合地图窗口显示的范围
+ @param mapRect 要调整的map rect
+ @param insets 嵌入边界
+ @return 调整后的map rect
  */
 - (MAMapRect)mapRectThatFits:(MAMapRect)mapRect edgePadding:(UIEdgeInsets)insets;
 
+#pragma mark - Zoom
+
 /*!
- @brief 将经纬度转换为指定view坐标系的坐标
- @param coordinate 经纬度
- @param view 指定的view
- @return 基于指定view坐标系的坐标
+ @brief 缩放级别
+ */
+@property (nonatomic, assign) double zoomLevel;
+
+/*!
+ @brief 最小缩放级别
+ */
+@property (nonatomic, readonly) double minZoomLevel;
+
+/*!
+ @brief 最大缩放级别
+ */
+@property (nonatomic, readonly) double maxZoomLevel;
+
+/*!
+ @brief 设置当前地图的缩放级别zoom level
+ @param zoomLevel 要设置的zoom level
+ @param animated 是否采用动画效果
+ */
+- (void)setZoomLevel:(double)newZoomLevel animated:(BOOL)animated;
+
+/*!
+ @brief 设置当前地图的缩放级别zoom level
+ @param zoomLevel 要设置的zoom level
+ @param pivot 指定缩放的锚点，屏幕坐标
+ @param animated 是否采用动画效果
+ */
+- (void)setZoomLevel:(double)newZoomLevel atPivot:(CGPoint)pivot animated:(BOOL)animated;
+
+#pragma mark - Conversions
+
+/*!
+ @brief 将经纬度坐标转化为相对于指定view的坐标
+ @param coordinate 要转化的经纬度坐标
+ @param view 指定的坐标系统的view
  */
 - (CGPoint)convertCoordinate:(CLLocationCoordinate2D)coordinate toPointToView:(UIView *)view;
 
 /*!
- @brief 将指定view坐标系的坐标转换为经纬度
- @param point 指定view坐标系的坐标
- @param view 指定的view
- @return 经纬度
+ @brief 将相对于view的坐标转化为经纬度坐标
+ @param point 要转化的坐标
+ @param view point所基于的view
+ return 转化后的经纬度坐标
  */
 - (CLLocationCoordinate2D)convertPoint:(CGPoint)point toCoordinateFromView:(UIView *)view;
 
 /*!
- @brief 将经纬度region转换为指定view坐标系的rect
- @param region 经纬度region
- @param view 指定的view
- @return 指定view坐标系的rect
+ @brief 将map rect 转化为相对于view的坐标
+ @param region 要转化的 map rect
+ @param view 返回值所基于的view
+ return 基于view的坐标
  */
 - (CGRect)convertRegion:(MACoordinateRegion)region toRectToView:(UIView *)view;
 
 /*!
- @brief 将指定view坐标系的rect转换为经纬度region
- @param rect 指定view坐标系的rect
- @param view 指定的view
- @return 经纬度region
+ @brief 将相对于view的rectangle转化为region
+ @param rect 要转化的rectangle
+ @param view rectangle所基于的view
+ return 转化后的region
  */
 - (MACoordinateRegion)convertRect:(CGRect)rect toRegionFromView:(UIView *)view;
+
+#pragma mark - UserLocation
 
 /*!
  @brief 是否显示用户位置
  */
-@property (nonatomic) BOOL showsUserLocation;
+@property (nonatomic, assign, getter = isShowsUserLocation) BOOL showsUserLocation;
 
 /*!
  @brief 当前的位置数据
@@ -337,27 +267,34 @@ typedef NSInteger MAUserTrackingMode;
 @property (nonatomic, readonly) MAUserLocation *userLocation;
 
 /*!
- @brief 是否自定义用户位置精度圈(userLocationAccuracyCircle)对应的 view, 默认为 NO.
- 如果为YES: 会调用 - (MAOverlayView *)mapView:(MAMapView *)mapView viewForOverlay:(id <MAOverlay>)overlay 若返回nil, 则不加载.
- 如果为NO : 会使用默认的样式.
- */
-@property (nonatomic) BOOL customizeUserLocationAccuracyCircleRepresentation;
-
-/*!
- @brief 用户位置精度圈 对应的overlay.
- */
-@property (nonatomic, readonly) MACircle *userLocationAccuracyCircle;
-
-/*!
  @brief 定位用户位置的模式
  */
 @property (nonatomic) MAUserTrackingMode userTrackingMode;
+
+/*!
+ @brief 设置追踪用户位置的模式
+ @param mode 要使用的模式
+ @param animated 是否采用动画效果
+ */
 - (void)setUserTrackingMode:(MAUserTrackingMode)mode animated:(BOOL)animated;
 
 /*!
  @brief 当前位置再地图中是否可见
  */
 @property (nonatomic, readonly, getter=isUserLocationVisible) BOOL userLocationVisible;
+
+/*!
+ @brief 设定UserLocationView样式。如果用户自定义了userlocation的annotationView，或者该annotationView还未添加到地图上，此方法将不起作用。
+ @param representation 样式信息对象
+ */
+- (void)updateUserLocationRepresentation:(MAUserLocationRepresentation *)representation;
+
+#pragma mark - Annotations
+
+/*!
+ @brief 标注数组
+ */
+@property (nonatomic, readonly) NSArray *annotations;
 
 /*!
  @brief 向地图窗口添加标注，需要实现MAMapViewDelegate的-mapView:viewForAnnotation:函数来生成标注对应的View
@@ -384,18 +321,6 @@ typedef NSInteger MAUserTrackingMode;
 - (void)removeAnnotations:(NSArray *)annotations;
 
 /*!
- @brief 标注数组
- */
-@property (nonatomic, readonly) NSArray *annotations;
-
-/*!
- @brief 获取指定投影矩形范围内的标注
- @param mapRect 投影矩形范围
- @return 标注集合
- */
-- (NSSet *)annotationsInMapRect:(MAMapRect)mapRect;
-
-/*!
  @brief 根据标注数据过去标注view
  @param annotation 标注数据
  @return 对应的标注view
@@ -408,6 +333,11 @@ typedef NSInteger MAUserTrackingMode;
  @return annotation view
  */
 - (MAAnnotationView *)dequeueReusableAnnotationViewWithIdentifier:(NSString *)identifier;
+
+/*!
+ @brief 处于选中状态的标注数据数据(其count == 0 或 1)
+ */
+@property (nonatomic, copy) NSArray *selectedAnnotations;
 
 /*!
  @brief 选中标注数据对应的view
@@ -424,35 +354,53 @@ typedef NSInteger MAUserTrackingMode;
 - (void)deselectAnnotation:(id <MAAnnotation>)annotation animated:(BOOL)animated;
 
 /*!
- @brief 处于选中状态的标注数据数据(其count == 0 或 1)
- */
-@property (nonatomic, copy) NSArray *selectedAnnotations;
-
-/*!
  @brief annotation 可见区域
  */
 @property (nonatomic, readonly) CGRect annotationVisibleRect;
 
 /*!
- @brief 设置地图使其可以显示数组中所有的annotation。
+ @brief 获取指定投影矩形范围内的标注
+ @param mapRect 投影矩形范围
+ @return 标注集合
+ */
+- (NSSet *)annotationsInMapRect:(MAMapRect)mapRect;
+
+/*!
+ 设置地图使其可以显示数组中所有的annotation
+ @param annotations 需要显示的annotation
+ @param animated    是否执行动画
  */
 - (void)showAnnotations:(NSArray *)annotations animated:(BOOL)animated;
 
-@end
+#pragma mark - Overlays
 
 /*!
- @brief 地图view关于overlay类别
+ @brief Overlay数组
  */
-@interface MAMapView (OverlaysAPI)
+@property (nonatomic, readonly) NSArray *overlays;
 
 /*!
- @brief 向地图窗口添加Overlay，需要实现MAMapViewDelegate的-mapView:viewForOverlay:函数来生成标注对应的View
+ @brief 查找指定overlay对应的Renderer，如果该Renderer尚未创建，返回nil
+ @param overlay 指定的overlay
+ @return 指定overlay对应的Renderer
+ */
+- (MAOverlayRenderer *)rendererForOverlay:(id <MAOverlay>)overlay;
+
+/*!
+ @brief 查找指定overlay对应的View，如果该View尚未创建，返回nil
+ @param overlay 指定的overlay
+ @return 指定overlay对应的View
+ */
+- (MAOverlayView *)viewForOverlay:(id <MAOverlay>)overlay __attribute__ ((deprecated("use - (MAOverlayRenderer *)rendererForOverlay:(id <MAOverlay>)overlay instead")));
+
+/*!
+ @brief 向地图窗口添加Overlay，需要实现MAMapViewDelegate的-mapView:rendererForOverlay:函数来生成标注对应的Renderer
  @param overlay 要添加的overlay
  */
 - (void)addOverlay:(id <MAOverlay>)overlay;
 
 /*!
- @brief 向地图窗口添加一组Overlay，需要实现BMKMapViewDelegate的-mapView:viewForOverlay:函数来生成标注对应的View
+ @brief 向地图窗口添加一组Overlay，需要实现BMKMapViewDelegate的-mapView:rendererForOverlay:函数来生成标注对应的Renderer
  @param overlays 要添加的overlay数组
  */
 - (void)addOverlays:(NSArray *)overlays;
@@ -497,19 +445,9 @@ typedef NSInteger MAUserTrackingMode;
  */
 - (void)insertOverlay:(id <MAOverlay>)overlay belowOverlay:(id <MAOverlay>)sibling;
 
-/*!
- @brief Overlay数组
- */
-@property (nonatomic, readonly) NSArray *overlays;
-
-/*!
- @brief 查找指定overlay对应的View，如果该View尚未创建，返回nil
- @param overlay 指定的overlay
- @return 指定overlay对应的View
- */
-- (MAOverlayView *)viewForOverlay:(id <MAOverlay>)overlay;
-
 @end
+
+#pragma mark - Snapshots
 
 /*!
  @brief 地图view关于截图的类别
@@ -523,30 +461,16 @@ typedef NSInteger MAUserTrackingMode;
  */
 - (UIImage *)takeSnapshotInRect:(CGRect)rect;
 
-@end
-
 /*!
- @brief 地图view关于离线下载的类别
+ @brief 获得地图当前可视区域截图
+ @param rect 指定截图区域
+ @param block 回调block
  */
-@interface MAMapView (Offline)
-
-/*!
- @brief 将离线地图解压到 Documents/3dvmap/ 目录下后，调用此函数使离线数据生效,
- 对应的回调分别是 offlineDataWillReload:(MAMapView *)mapView, offlineDataDidReload:(MAMapView *)mapView.
- */
-- (void)reloadMap;
+- (void)takeSnapshotInRect:(CGRect)rect withCompletionBlock:(void (^)(UIImage *resultImage, CGRect rect))block;
 
 @end
 
-@interface MAMapView (OpenGLES)
-
-/*!
- @brief 停止/开启 OpenGLES 指令绘制操作
- 对应的回调是 - (void)mapView:(MAMapView *)mapView didChangeOpenGLESDisabled:(BOOL)openGLESDisabled
- */
-@property (nonatomic) BOOL openGLESDisabled;
-
-@end
+#pragma mark - LocationOption
 
 /*!
  @brief 定位相关参数的类别
@@ -570,6 +494,8 @@ typedef NSInteger MAUserTrackingMode;
 
 @end
 
+#pragma mark - MAMapViewDelegate
+
 /*!
  @brief 地图view的delegate
  */
@@ -591,32 +517,12 @@ typedef NSInteger MAUserTrackingMode;
 - (void)mapView:(MAMapView *)mapView regionDidChangeAnimated:(BOOL)animated;
 
 /*!
- @brief 地图开始加载
- @param mapview 地图View
- */
-- (void)mapViewWillStartLoadingMap:(MAMapView *)mapView;
-
-/*!
- @brief 地图加载成功
- @param mapView 地图View
- @param dataSize 数据大小
- */
-- (void)mapViewDidFinishLoadingMap:(MAMapView *)mapView dataSize:(NSInteger)dataSize;
-
-/*!
- @brief 地图加载失败
- @param mapView 地图View
- @param error 错误信息
- */
-- (void)mapViewDidFailLoadingMap:(MAMapView *)mapView withError:(NSError *)error;
-
-/*!
  @brief 根据anntation生成对应的View
  @param mapView 地图View
  @param annotation 指定的标注
  @return 生成的标注View
  */
-- (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id <MAAnnotation>)annotation;
+- (MAAnnotationView*)mapView:(MAMapView *)mapView viewForAnnotation:(id <MAAnnotation>)annotation;
 
 /*!
  @brief 当mapView新添加annotation views时，调用此接口
@@ -640,6 +546,14 @@ typedef NSInteger MAUserTrackingMode;
 - (void)mapView:(MAMapView *)mapView didDeselectAnnotationView:(MAAnnotationView *)view;
 
 /*!
+ @brief 标注view的accessory view(必须继承自UIControl)被点击时，触发该回调
+ @param mapView 地图View
+ @param annotationView callout所属的标注view
+ @param control 对应的control
+ */
+- (void)mapView:(MAMapView *)mapView annotationView:(MAAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control;
+
+/*!
  @brief 在地图View将要启动定位时，会调用此函数
  @param mapView 地图View
  */
@@ -652,11 +566,11 @@ typedef NSInteger MAUserTrackingMode;
 - (void)mapViewDidStopLocatingUser:(MAMapView *)mapView;
 
 /*!
- @brief 位置或者设备方向更新后，会调用此函数, 这个回调已废弃由 -(void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation 来替代
+ @brief 位置或者设备方向更新后，会调用此函数
  @param mapView 地图View
  @param userLocation 用户定位信息(包括位置与设备方向等数据)
  */
-- (void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation __attribute__ ((deprecated("use -(void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation instead")));
+- (void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation;
 
 /*!
  @brief 位置或者设备方向更新后，会调用此函数
@@ -674,39 +588,6 @@ typedef NSInteger MAUserTrackingMode;
 - (void)mapView:(MAMapView *)mapView didFailToLocateUserWithError:(NSError *)error;
 
 /*!
- @brief 拖动annotation view时view的状态变化，ios3.2以后支持
- @param mapView 地图View
- @param view annotation view
- @param newState 新状态
- @param oldState 旧状态
- */
-- (void)mapView:(MAMapView *)mapView annotationView:(MAAnnotationView *)view didChangeDragState:(MAAnnotationViewDragState)newState
-fromOldState:(MAAnnotationViewDragState)oldState;
-
-/*!
- @brief 根据overlay生成对应的View
- @param mapView 地图View
- @param overlay 指定的overlay
- @return 生成的覆盖物View
- */
-- (MAOverlayView *)mapView:(MAMapView *)mapView viewForOverlay:(id <MAOverlay>)overlay;
-
-/*!
- @brief 当mapView新添加overlay views时，调用此接口
- @param mapView 地图View
- @param overlayViews 新添加的overlay views
- */
-- (void)mapView:(MAMapView *)mapView didAddOverlayViews:(NSArray *)overlayViews;
-
-/*!
- @brief 标注view的accessory view(必须继承自UIControl)被点击时，触发该回调
- @param mapView 地图View
- @param annotationView callout所属的标注view
- @param control 对应的control
- */
-- (void)mapView:(MAMapView *)mapView annotationView:(MAAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control;
-
-/*!
  @brief 当userTrackingMode改变时，调用此接口
  @param mapView 地图View
  @param mode 改变后的mode
@@ -715,29 +596,42 @@ fromOldState:(MAAnnotationViewDragState)oldState;
 - (void)mapView:(MAMapView *)mapView didChangeUserTrackingMode:(MAUserTrackingMode)mode animated:(BOOL)animated;
 
 /*!
- @brief 离线地图数据将要被加载, 调用reloadMap会触发该回调，离线数据生效前的回调.
- @param mapview 地图View
- */
-- (void)offlineDataWillReload:(MAMapView *)mapView;
-
-/*!
- @brief 离线地图数据加载完成, 调用reloadMap会触发该回调，离线数据生效后的回调.
- @param mapview 地图View
- */
-- (void)offlineDataDidReload:(MAMapView *)mapView;
-
-/*!
- @brief 当openGLESDisabled变量改变时，调用此接口
+ @brief 拖动annotation view时view的状态变化，ios3.2以后支持
  @param mapView 地图View
- @param mode 改变后的openGLESDisabled
+ @param view annotation view
+ @param newState 新状态
+ @param oldState 旧状态
  */
-- (void)mapView:(MAMapView *)mapView didChangeOpenGLESDisabled:(BOOL)openGLESDisabled;
+- (void)mapView:(MAMapView *)mapView annotationView:(MAAnnotationView *)view didChangeDragState:(MAAnnotationViewDragState)newState fromOldState:(MAAnnotationViewDragState)oldState;
 
 /*!
- @brief 当touchPOIEnabled == YES时，单击地图使用该回调获取POI信息
+ @brief 根据overlay生成对应的Renderer
  @param mapView 地图View
- @param pois 获取到的poi数组(由MATouchPoi组成)
+ @param overlay 指定的overlay
+ @return 生成的覆盖物Renderer
  */
-- (void)mapView:(MAMapView *)mapView didTouchPois:(NSArray *)pois;
+- (MAOverlayRenderer *)mapView:(MAMapView *)mapView rendererForOverlay:(id <MAOverlay>)overlay;
+
+/*!
+ @brief 根据overlay生成对应的View
+ @param mapView 地图View
+ @param overlay 指定的overlay
+ @return 生成的覆盖物View
+ */
+- (MAOverlayView *)mapView:(MAMapView *)mapView viewForOverlay:(id <MAOverlay>)overlay __attribute__ ((deprecated("use - (MAOverlayRenderer *)mapView:(MAMapView *)mapView rendererForOverlay:(id <MAOverlay>)overlay instead")));
+
+/*!
+ @brief 当mapView新添加overlay renderer时，调用此接口
+ @param mapView 地图View
+ @param renderers 新添加的overlay renderers
+ */
+- (void)mapView:(MAMapView *)mapView didAddOverlayRenderers:(NSArray *)renderers;
+
+/*!
+ @brief 当mapView新添加overlay views时，调用此接口
+ @param mapView 地图View
+ @param overlayViews 新添加的overlay views
+ */
+- (void)mapView:(MAMapView *)mapView didAddOverlayViews:(NSArray *)overlayViews __attribute__ ((deprecated("use - (void)mapView:(MAMapView *)mapView didAddOverlayRenderers:(NSArray *)renderers instead")));
 
 @end

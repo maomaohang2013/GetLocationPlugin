@@ -2,23 +2,18 @@
 //  MAMultiPoint.h
 //  MAMapKit
 //
-//
-//  Copyright (c) 2011年 Autonavi Inc. All rights reserved.
+//  Created by AutoNavi.
+//  Copyright (c) 2013年 AutoNavi. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "MAShape.h"
 #import "MAGeometry.h"
+#import "MAShape.h"
 
 /*!
  @brief 该类是个由多个点组成的虚基类, 不能直接实例化对象, 要使用其子类MAPolyline,MAPolygon来实例化
  */
-@interface MAMultiPoint : MAShape {
-    @package
-    MAMapPoint *_points;
-    NSUInteger _pointCount;
-    MAMapRect _boundingRect;
-}
+@interface MAMultiPoint : MAShape
 
 /*!
  @brief 坐标点数组

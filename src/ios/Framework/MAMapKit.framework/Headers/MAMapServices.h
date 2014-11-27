@@ -2,8 +2,8 @@
 //  MAMapServices.h
 //  MapKit_static
 //
-//  Created by songjian on 13-6-13.
-//  Copyright (c) 2013年 songjian. All rights reserved.
+//  Created by AutoNavi.
+//  Copyright (c) 2013年 AutoNavi. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

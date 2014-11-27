@@ -1,16 +1,16 @@
 //
 //  MAGroundOverlayView.h
-//  MapKit_static
+//  MAMapKitNew
 //
-//  Created by Li Fei on 11/13/13.
-//  Copyright (c) 2013 songjian. All rights reserved.
+//  Created by AutoNavi.
+//  Copyright (c) 2014年 AutoNavi. All rights reserved.
 //
 
 #import "MAOverlayView.h"
 #import "MAGroundOverlay.h"
 
 /*!
- @brief 此类是将MAGroundOverlay中的覆盖图片显示在地图上的view;
+ @brief 此类是将MAGroundOverlay中的覆盖图片显示在地图上的View;
  */
 @interface MAGroundOverlayView : MAOverlayView
 
@@ -25,5 +25,6 @@
  @return 以GroundOverlay新生成View
  */
 - (id)initWithGroundOverlay:(MAGroundOverlay *)groundOverlay;
+
 
 @end

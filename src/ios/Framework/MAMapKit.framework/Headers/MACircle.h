@@ -2,8 +2,8 @@
 //  MACircle.h
 //  MAMapKit
 //
-//
-//  Copyright (c) 2011年 Autonavi Inc. All rights reserved.
+//  Created by AutoNavi.
+//  Copyright (c) 2013年 AutoNavi. All rights reserved.
 //
 
 #import "MAShape.h"
@@ -11,15 +11,9 @@
 #import "MAGeometry.h"
 
 /*!
- @brief 该类用于定义一个圆, 通常MACircle是MACircleView的model
+ @brief 该类用于定义一个圆, 通常MACircle是MACircleRenderer的model
  */
-@interface MACircle : MAShape <MAOverlay> {
-    @package
-    CLLocationCoordinate2D _coordinate;
-    CLLocationDistance _radius;
-    
-    MAMapRect _boundingMapRect;
-}
+@interface MACircle : MAShape <MAOverlay>
 
 /*!
  @brief 根据中心点和半径生成圆
@@ -28,11 +22,11 @@
  @return 新生成的圆
  */
 + (instancetype)circleWithCenterCoordinate:(CLLocationCoordinate2D)coord
-                                    radius:(CLLocationDistance)radius;
+                                  radius:(CLLocationDistance)radius;
 
 /*!
  @brief 根据map rect生成圆
- @param mapRect 圆的最小外界矩形
+ @param mapRect 生成的圆的直径为MAX(width, height)
  @return 新生成的圆
  */
 + (instancetype)circleWithMapRect:(MAMapRect)mapRect;

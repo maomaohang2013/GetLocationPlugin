@@ -2,15 +2,15 @@
 //  MAPolyline.h
 //  MAMapKit
 //
-//  
-//  Copyright (c) 2011年 Autonavi Inc. All rights reserved.
+//  Created by AutoNavi.
+//  Copyright (c) 2013年 AutoNavi. All rights reserved.
 //
 
 #import "MAMultiPoint.h"
 #import "MAOverlay.h"
 
 /*!
- @brief 此类用于定义一个由多个点相连的多段线，点与点之间尾部想连但第一点与最后一个点不相连, 通常MAPolyline是MAPolylineView的model
+ @brief 此类用于定义一个由多个点相连的多段线，点与点之间尾部想连但第一点与最后一个点不相连, 通常MAPolyline是MAPolylineRenderer的model
  */
 @interface MAPolyline : MAMultiPoint <MAOverlay>
 

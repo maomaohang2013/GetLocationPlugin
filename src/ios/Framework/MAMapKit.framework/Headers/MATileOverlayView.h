@@ -1,16 +1,16 @@
 //
 //  MATileOverlayView.h
-//  MapKit_static
+//  MAMapKitNew
 //
-//  Created by Li Fei on 11/25/13.
-//  Copyright (c) 2013 songjian. All rights reserved.
+//  Created by xiaoming han on 14-5-4.
+//  Copyright (c) 2014年 AutoNavi. All rights reserved.
 //
 
 #import "MAOverlayView.h"
 #import "MATileOverlay.h"
 
 /*!
- @brief 此类是将MAOverlayView中的覆盖tiles显示在地图上的view;
+ @brief 此类将MATileOverlay中的tile渲染到地图上
  */
 @interface MATileOverlayView : MAOverlayView
 
@@ -20,10 +20,15 @@
 @property (nonatomic ,readonly) MATileOverlay *tileOverlay;
 
 /*!
- @brief 根据指定的tileOverlay生成将tiles显示在地图上的View
- @param tileOverlay 制定了覆盖图片，以及图片的覆盖区域的groundOverlay
- @return 以tileOverlay新生成View
+ @brief 根据指定的tileOverlay生成MAOverlayView
+ @param tileOverlay 数据源
+ @return 初始化成功则返回overlayView,否则返回nil
  */
-- (id)initWithTileOverlay:(MATileOverlay *)tileOverlay;
+- (id)initWithTileOverlay:(MATileOverlay *)overlay;
+
+/*!
+ @brief 清除所有tile的缓存，并刷新overlay
+ */
+- (void)reloadData;
 
 @end
