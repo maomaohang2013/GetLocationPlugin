@@ -6,9 +6,8 @@
 @interface BaseMapViewController()
 
 @end
-@implementation BaseMapViewController{
-    CLLocationManager * locationManager;
-}
+@implementation BaseMapViewController
+
 @synthesize mapView = _mapView;
 @synthesize search  = _search;
 
@@ -22,9 +21,9 @@
     NSString* File = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
     NSMutableDictionary* dict = [[NSMutableDictionary alloc] initWithContentsOfFile:File];
     
-    NSLog(@"key: %@",[dict objectForKey:@"GAODE_KEY"]);
+    //NSLog(@"key: %@",[dict objectForKey:@"GAODE_KEY"]);
     APIKey = [dict objectForKey:@"GAODE_KEY"];
-    NSLog(@"key: %@",APIKey);
+    //NSLog(@"key: %@",APIKey);
 
     if ([APIKey length] == 0)
     {
@@ -93,6 +92,7 @@
  
     self.mapView=[[MAMapView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
     self.mapView.delegate = self;
+    
     //[self.view addSubview:self.mapView];
     //NSLog(@"initmapview");
 
@@ -110,8 +110,7 @@
 
 - (void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation
 {
-    //NSLog(@"latitude :%f", userLocation.location.coordinate.latitude);
-    //NSLog(@"longitude :%f", userLocation.location.coordinate.longitude);
+    
     [self searchReGeocode:userLocation.location.coordinate.latitude withLong:userLocation.location.coordinate.longitude];
     self.mapView.showsUserLocation = NO;
 
@@ -139,40 +138,23 @@
 {
     if (response.regeocode != nil)
     {
-        NSString *result = [NSString stringWithFormat:@"%@", [@"" stringByAppendingFormat:@"%@%@%@%@%@%@", response.regeocode.addressComponent.province,response.regeocode.addressComponent.city,response.regeocode.addressComponent.district,response.regeocode.addressComponent.township,response.regeocode.addressComponent.neighborhood,response.regeocode.addressComponent.building]];
+
+        NSString *result = response.regeocode.formattedAddress;
         
         NSLog(@"address :%@", result);
         
         NSMutableArray *resultArray = [NSMutableArray arrayWithObjects:result,[NSString stringWithFormat:@"%f", request.location.latitude],[NSString stringWithFormat:@"%f", request.location.longitude], nil];
    
         [[NSNotificationCenter defaultCenter] postNotificationName:@"RELOADVOEWNOTIFICATION" object:resultArray ];
-        [self.view removeFromSuperview];
+        //[self.view removeFromSuperview];
+        [self dismissViewControllerAnimated:NO completion:nil];
+               
     }
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    locationManager =[[CLLocationManager alloc] init];
-    
-    locationManager =[[CLLocationManager alloc] init];
-    
-    // fix ios8 location issue
-    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
-    #ifdef __IPHONE_8_0
-        if ([locationManager respondsToSelector:@selector(requestAlwaysAuthorization)])
-        {
-            [locationManager performSelector:@selector(requestAlwaysAuthorization)];//用??方法，plist中需要NSLocationAlwaysUsageDescription
-        }
-        
-        if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)])
-        {
-            [locationManager performSelector:@selector(requestWhenInUseAuthorization)];//用??方法，plist里要加字段NSLocationWhenInUseUsageDescription
-        }
-    #endif
-    }
-    
     self.mapView.showsUserLocation = YES;
     
 }

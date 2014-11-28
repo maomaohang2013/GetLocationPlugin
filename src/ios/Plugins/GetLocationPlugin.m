@@ -11,7 +11,6 @@ static NSString *message,*callbackID,*address,*latitude,*longitude;
     message  = [command.arguments objectAtIndex:0];
     
     callbackID = command.callbackId;
-    
     [self sendNotification];
   }
 
@@ -23,29 +22,47 @@ static NSString *message,*callbackID,*address,*latitude,*longitude;
     address = [array objectAtIndex:0];
     latitude = [array objectAtIndex:1];
     longitude = [array objectAtIndex:2];
-    [self.webView.window.rootViewController dismissModalViewControllerAnimated:YES];
     
     if ([message isEqualToString:@"address"]) {
-        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:address];
-        [self writeJavascript:[pluginResult toSuccessCallbackString:callbackID]];
-    } else if([message isEqualToString:@"longitude"]) {
-        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:longitude];
-        [self writeJavascript:[pluginResult toSuccessCallbackString:callbackID]];
+        [self.commandDelegate runInBackground:^{
+            CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:address];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackID];
+        }];
+        
+        
     } else if([message isEqualToString:@"latitude"]) {
-        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:latitude];
-        [self writeJavascript:[pluginResult toSuccessCallbackString:callbackID]];
+        [self.commandDelegate runInBackground:^{
+            CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:latitude];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackID];
+        }];
+        
+        
+    } else if([message isEqualToString:@"longitude"]) {
+        [self.commandDelegate runInBackground:^{
+            CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:longitude];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackID];
+        }];
+        
     }
-
-    
 }
 
 - (void)sendNotification
 {
+  
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadView:) name:@"RELOADVOEWNOTIFICATION" object:nil];
     BaseMapViewController *baseMapViewController = [[BaseMapViewController alloc] init];
     baseMapViewController.view.backgroundColor = [UIColor clearColor];
-       self.webView.window.rootViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
-    [self.webView.window.rootViewController presentModalViewController:baseMapViewController animated:YES];
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] > 8.0) {
+        baseMapViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+        NSLog([[UIDevice currentDevice] systemVersion]);
+    } else {
+        NSLog([[UIDevice currentDevice] systemVersion]);
+        self.webView.window.rootViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    }
+    [self.webView.window.rootViewController presentViewController:baseMapViewController animated:NO completion:nil];
+   
+
 }
 
 

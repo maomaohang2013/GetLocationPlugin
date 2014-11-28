@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <!--
- Licensed to the Apache Software Foundation (ASF) under one
- or more contributor license agreements.  See the NOTICE file
- distributed with this work for additional information
- regarding copyright ownership.  The ASF licenses this file
- to you under the Apache License, Version 2.0 (the
- "License"); you may not use this file except in compliance
- with the License.  You may obtain a copy of the License at
- 
- http://www.apache.org/licenses/LICENSE-2.0
- 
- Unless required by applicable law or agreed to in writing,
- software distributed under the License is distributed on an
- "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- KIND, either express or implied.  See the License for the
- specific language governing permissions and limitations
- under the License.
- -->
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
 <html>
     <head>
         <meta charset="utf-8" />
@@ -27,17 +27,17 @@
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <title>Hello World</title>
     </head>
-    <body>
+    <body style="padding-top:20px;">
         <h1>getlocation</h1>
         
-        <button type="button" id="deviceProperties" onclick="getAddress()"  style="padding:10px 20px;">獲取地址</button>
-        <button type="button" id="deviceProperties" onclick="getLongitude()"  style="padding:10px 20px;">獲取經度</button>
-        <button type="button" id="deviceProperties" onclick="getLatitude()"  style="padding:10px 20px;">獲取緯度</button>
+        <button type="button" id="deviceProperties" onclick="getAddress()" style="width:180px;height:40px;">獲取地址</button><br><br>
+        <button type="button" id="deviceProperties" onclick="getLongitude()" style="width:180px;height:40px;">獲取經度</button><br><br>
+        <button type="button" id="deviceProperties" onclick="getLatitude()" style="width:180px;height:40px;">獲取緯度</button>
         
         <p id="name"></p>
         
         <script type="text/javascript" src="cordova.js"></script>
-		<script type="text/javascript" src="plugins/com.example.getlocation/www/getlocation.js"></script>
+        <script type="text/javascript" src="plugins/com.example.getlocation/www/getlocation.js"></script>
         <script type="text/javascript" charset="utf-8">
             
             document.addEventListener("deviceready", onDeviceReady, false);
@@ -45,23 +45,27 @@
             
             function getAddress() {
                 window.plugins.GetLocationPlugin.getlocation("address",function(a){
-                                                             alert('地址: ' + a)
+                                                             //alert('地址: ' + a);
+                                                             document.getElementById("name").innerHTML = '地址: ' + a;
+                                                             
                                                              }, function(b){
                                                              alert('toast error: ' + b)
                                                              });
             } ;
-		
-		function getLongitude() {
-			window.plugins.GetLocationPlugin.getlocation("longitude",function(a){
-                                                         alert('經度: ' + a)
+        
+        function getLongitude() {
+            window.plugins.GetLocationPlugin.getlocation("longitude",function(a){
+                                                         //alert('經度: ' + a);
+                                                         document.getElementById("name").innerHTML = '經度: ' + a;
                                                          }, function(b){
                                                          alert('toast error: ' + b)
                                                          });
-		};
-		
-		function getLatitude() {
-			window.plugins.GetLocationPlugin.getlocation("latitude",function(a){
-                                                         alert('緯度: ' + a)
+        };
+        
+        function getLatitude() {
+            window.plugins.GetLocationPlugin.getlocation("latitude",function(a){
+                                                         //alert('緯度: ' + a);
+                                                         document.getElementById("name").innerHTML = '緯度: ' + a;
                                                          }, function(b){
                                                          alert('toast error: ' + b)
                                                          });
